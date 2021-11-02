@@ -50,12 +50,17 @@ try:
             database.createDB()
             database.createTable("records")
             print("Database successfully created. You can now use Admission System 1.0")
+            for i in "Have a nice day:)":
+                print(i, end="", flush=True)
+                time.sleep(0.05)
+            close = input()
         except:
             print("Oops! Can't connect to the server!\nPlease check the login credentials and re-run the program.")
             for i in "Have a nice day:)":
                 print(i, end="", flush=True)
                 time.sleep(0.05)
             print()
+            close = input()
             exit()
 
     else:
@@ -64,6 +69,7 @@ try:
             print(i, end="", flush=True)
             time.sleep(0.05)
         print()
+        close = input()
         
 except:
     print("Oops! an error occurred! Exiting the program.")
@@ -71,4 +77,5 @@ except:
         print(i, end="", flush=True)
         time.sleep(0.05)
     print()
+    close = input()
     exit()
