@@ -285,5 +285,8 @@ try:
         print(i, end="", flush=True)
         time.sleep(0.05)
     print()
+    close = input()
 except:
     print("Oops! Can't connect to database!\nPlease check the login credentials!")
+    close = input()
+    exit()
