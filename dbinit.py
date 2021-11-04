@@ -16,9 +16,12 @@ class DB:
     def createTable(self,db):
         self.db = db
         self.con = mysql.connector.connect(host = self.server, username = self.user, password = self.pwd, database = db)
-        query = f"create table if not exists student_details(StudentID int auto_increment,StudentName varchar(30) not null,Parentage varchar(30) not null,Gender varchar(30) not null,Class varchar(10) not null,Address varchar(255) not null,Contact varchar(15) not null,primary key(StudentID));"
+        query1 = f"create table if not exists student_details(StudentID int auto_increment,StudentName varchar(30) not null,Parentage varchar(30) not null,Gender varchar(30) not null,Class varchar(10) not null,Address varchar(255) not null,Contact varchar(15) not null,primary key(StudentID));"
         c = self.con.cursor()
-        c.execute(query)
+        c.execute(query1)
+        self.con.commit()
+        query2 = f"create table if not exists deleted_records(StudentID int references student_details(StudentID),StudentName varchar(30) not null,Parentage varchar(30) not null,Gender varchar(30) not null,Class varchar(10) not null,Address varchar(255) not null,Contact varchar(15) not null,primary key(StudentID));"
+        c.execute(query2)
         self.con.commit()
         c.close()
         self.con.close()
