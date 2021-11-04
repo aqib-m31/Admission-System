@@ -35,21 +35,21 @@ class AdmSys:
             try:
                 update = int(update)
                 if update == 1:
-                    name = input("Enter correct name: ")
+                    self.name = input("Enter correct name: ")
                 elif update == 2:
-                    parentage = input("Enter correct parentage: ")
+                    self.parentage = input("Enter correct parentage: ")
                 elif update == 3:
-                    gender = input("Enter correct gender: ")
+                    self.gender = input("Enter correct gender: ")
                 elif update == 4:
-                    class1 = input("Enter correct class: ")
+                    self.class1 = input("Enter correct class: ")
                 elif update == 5:
-                    address = input("Enter correct address: ")
+                    self.address = input("Enter correct address: ")
                 elif update == 6:
-                    contact = input("Enter correct contact: ")
+                    self.contact = input("Enter correct contact: ")
                 elif update == 0:
                     try:
                         c = self.con.cursor()
-                        query = f"INSERT INTO student_details(StudentName, Parentage, Gender, Class, Address, Contact) VALUES('{name}','{parentage}','{gender}','{class1}','{address}','{contact}');"
+                        query = f"INSERT INTO student_details(StudentName, Parentage, Gender, Class, Address, Contact) VALUES('{self.name}','{self.parentage}','{self.gender}','{self.class1}','{self.address}','{self.contact}');"
                         c.execute(query)
                         self.con.commit()
                         c.close()
