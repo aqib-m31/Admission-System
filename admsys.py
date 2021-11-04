@@ -232,6 +232,24 @@ class AdmSys:
     def close_con(self):
         self.con.close()
 
+    #for saving the current database records in a text file
+    def save(self):
+        try:
+            with open("Student Record.txt", "w") as fhand:
+                fhand.write("STUDENT RECORD\n\nNOTE: Each row has the following format:\nID, Name, Parentage, Gender, Class, Address, Contact\n\n")
+                c = self.con.cursor()
+                query = "select * from student_details;"
+                c.execute(query)
+                for i in c:
+                    fhand.write(f"{i[0]}, {i[1]}, {i[2]}, {i[3]}, {i[4]}, {i[5]}, {i[6]}\n")
+                self.con.commit()
+                c.close()
+                print("Student record saved in a text file successfully!")
+                self.mainmenu()
+        except:
+            print("An unknown error occurred. Please TRY AGAIN!")
+            self.mainmenu()
+
 #MAIN
 heading = "====== Admission System 1.0 ======"
 for i in heading:
@@ -259,7 +277,7 @@ try:
     time.sleep(0.5)
     while True:
         print("="*10 + " E-System " + "="*10)
-        print("1. Enroll\n2. View Records\n3. Delete Records\n4. Update Records\n5. Exit Program")
+        print("1. Enroll\n2. View Records\n3. Delete Records\n4. Update Records\n5. Save Records\n6. Exit Program")
         print("="*30)
         print()
         choice = input("Enter your choice: ")
@@ -275,6 +293,8 @@ try:
             elif choice == 4:
                 AdmissionSystem.update()
             elif choice == 5:
+                AdmissionSystem.save()
+            elif choice == 6:
                 AdmissionSystem.close_con()
                 break
 
