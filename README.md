@@ -7,6 +7,7 @@ __A simple program that__:
 	* **view function** -- to view student data stored on the database.
 	* **delete function** -- to delete details of a particular student from the database.
 	* **update function** -- to update details of a particular student in the database.
+	* **save function** -- to save database records in a text file.
 	> admsys.py
 ##### dbinit.py:
 1. *Tells user to install mysql server and setup the user account.*
@@ -17,5 +18,5 @@ __A simple program that__:
 6. *If this program doesn't generate any error message, **admsys.py** is ready to use.*
 ##### admsys.py
 1. *Asks for username and password to connect to the server to get access to the database.*
-2. *On connecting successfully, it provides the above mentioned functions viz. **enroll()**, **view()**, **delete()** and **update()** to the user to manipulate student data in the database.*
+2. *On connecting successfully, it provides the above mentioned functions viz. **enroll()**, **view()**, **delete()**, **update()** and **save()** to the user to manipulate student data in the database.*
 > Note: If you use this for the first time - firstly run dbinit.py and on successful execution you're ready to run admsys.py
