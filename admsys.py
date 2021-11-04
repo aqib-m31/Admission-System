@@ -15,16 +15,20 @@ class AdmSys:
         goto_menu = input("Press ENTER to return to main menu.")
         print()
     
+    #ask student details
+    def ask_details(self):
+        self.name = input("\tName: ")
+        self.parentage = input("\tParentage: ")
+        self.gender = input("\tGender: ")
+        self.class1 = input("\tClass: ")
+        self.address = input("\tAddress: ")
+        self.contact = input("\tContact: ")
+
     #enroll function -- for inserting student details in the database   
     def enroll(self):
         print("Student Details:")
-        name = input("\tName: ")
-        parentage = input("\tParentage: ")
-        gender = input("\tGender: ")
-        class1 = input("\tClass: ")
-        address = input("\tAddress: ")
-        contact = input("\tContact: ")
-        print(f"\nHere are the details you entered:\n1. Name: {name}\n2. Parentage: {parentage}\n3. Gender: {gender}\n4. Class: {class1}\n5. Address: {address}\n6. Contact: {contact}")
+        self.ask_details()
+        print(f"\nHere are the details you entered:\n1. Name: {self.name}\n2. Parentage: {self.parentage}\n3. Gender: {self.gender}\n4. Class: {self.class1}\n5. Address: {self.address}\n6. Contact: {self.contact}")
         print()
         while True:
             update = input("If you wanna correct any of the above details, enter the corresponding number or Enter 0 to submit: ")
@@ -64,8 +68,8 @@ class AdmSys:
                 self.mainmenu()
                 break
 
-    #view fuction -- for viewing student records from the database
-    def view(self):
+    #view current records
+    def current_rec(self):
         c = self.con.cursor()
         query1 = "DESCRIBE student_details;"
         c.execute(query1)
@@ -82,6 +86,46 @@ class AdmSys:
         self.con.commit()
         c.close()
         self.mainmenu()
+
+    #view deleted records
+    def deleted_rec(self):
+        c = self.con.cursor()
+        query1 = "DESCRIBE student_details;"
+        c.execute(query1)
+        print(">>>DELETED RECORD<<<")
+        print("NOTE: Each row has the following format:")
+        for i in c:
+            print(i[0],end=" ")
+        print()
+        query2 = "select * from deleted_records;"
+        c.execute(query2)
+        for i in c:
+            print(i)
+        print()
+        self.con.commit()
+        c.close()
+        self.mainmenu()
+        
+    #view fuction -- for viewing student records from the database
+    def view(self):
+        print("1. View Current Record\n2. View Deleted Record\n3. Main Menu")
+        print()
+        choice = input("Enter your choice: ")
+        print()
+        try:
+            choice = int(choice)
+            if choice == 1:
+                self.current_rec()
+            elif choice == 2:
+                self.deleted_rec()
+            elif choice == 3:
+                pass
+            else:
+                print("You entered an invalid number.")
+                self.mainmenu()
+        except:
+            print("Oops! Invalid value.")
+            self.mainmenu()
 
     #delete function -- for deleting records from the database
     def delete(self):
@@ -102,6 +146,9 @@ class AdmSys:
                 query2 = f"delete from student_details where StudentID={id};"
                 if delete_data.upper() == "Y":
                     c.execute(query2)
+                    self.con.commit()
+                    query3 = f"insert into deleted_records(StudentID, StudentName, Parentage, Gender, Class, Address, Contact) VALUES('{found[0][0]}','{found[0][1]}','{found[0][2]}','{found[0][3]}','{found[0][4]}','{found[0][5]}','{found[0][6]}');"
+                    c.execute(query3)
                     self.con.commit()
                     c.close()
                     print("Successfully Deleted!")
@@ -203,14 +250,9 @@ class AdmSys:
                             break
                         elif update == 0:
                             print(f"Enter updated details for Student Id {id}:")
-                            name = input("\tName: ")
-                            parentage = input("\tParentage: ")
-                            gender = input("\tGender: ")
-                            class1 = input("\tClass: ")
-                            address = input("\tAddress: ")
-                            contact = input("\tContact: ")
+                            self.ask_details()
                             c = self.con.cursor()
-                            update_query = f"update student_details set StudentName='{name}',Parentage='{parentage}',Gender='{gender}',Class='{class1}',Address='{address}',Contact='{contact}' where StudentID={id};"
+                            update_query = f"update student_details set StudentName='{self.name}',Parentage='{self.parentage}',Gender='{self.gender}',Class='{self.class1}',Address='{self.address}',Contact='{self.contact}' where StudentID={id};"
                             c.execute(update_query)
                             self.con.commit()
                             c.close()
